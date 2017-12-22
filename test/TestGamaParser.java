@@ -12,7 +12,7 @@ public class TestGamaParser {
     @Before
     public void setUpGetParserBearingPhrase() {
         getParserBearingPhraseData.put("Я иду один по городу!", new String[]{"я", "иду", "один", "по", "городу"});
-        getParserBearingPhraseData.put("Я иду, шагаю по Москве!", new String[]{"я", "иду"});
+        getParserBearingPhraseData.put("Я иду, шагаю по Москве!", new String[]{"я", "иду", "шагаю", "по", "москве"});
     }
 
     @After
@@ -40,7 +40,7 @@ public class TestGamaParser {
     public void setUpGetParserSentence() {
         getParserSentenceData.put("Я иду один по городу!", new String[][]{{"я", "иду", "один", "по", "городу"}});
         getParserSentenceData.put("Я иду, шагаю по Москве!", new String[][]{{"я", "иду"},{"шагаю", "по", "москве"}});
-        getParserSentenceData.put("Я иду, шагаю по Москве! И мне хорошо.", new String[][]{{"я", "иду"},{"шагаю", "по", "москве"}});
+        getParserSentenceData.put("Я иду, шагаю по Москве! И мне хорошо.", new String[][]{{"я", "иду"},{"шагаю", "по", "москве"},{"и", "мне", "хорошо"}});
     }
 
     @After
