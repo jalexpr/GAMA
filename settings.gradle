@@ -1,0 +1,11 @@
+
+rootProject.name = 'Gama'
+
+include 'JMorfSdk'
+project(':JMorfSdk').projectDir = new File('C:/TFWWT/JMorfSdk')
+
+include 'MorphologicalStructures'
+project(':MorphologicalStructures').projectDir = new File('C:/TFWWT/MorphologicalStructures')
+
+include 'TemplateWrapperClasses'
+project(':TemplateWrapperClasses').projectDir = new File('C:/TFWWT/TemplateWrapperClasses')
