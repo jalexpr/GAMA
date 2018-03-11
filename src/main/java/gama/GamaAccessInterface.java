@@ -1,10 +1,6 @@
 package gama;
 
-import storagestructures.OmoFormList;
-import storagestructures.WordList;
-import storagestructures.BearingPhraseList;
-import storagestructures.SentenceList;
-import storagestructures.ParagraphList;
+import morphological.structures.storage.*;
 
 public interface GamaAccessInterface {
 
@@ -17,4 +13,5 @@ public interface GamaAccessInterface {
     public SentenceList getMorfParagraph(String paragraph);
 
     public ParagraphList getMorfText(String text);
+
 }

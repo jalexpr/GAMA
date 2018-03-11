@@ -9,3 +9,6 @@ project(':MorphologicalStructures').projectDir = new File('C:/TFWWT/Morphologica
 
 include 'TemplateWrapperClasses'
 project(':TemplateWrapperClasses').projectDir = new File('C:/TFWWT/TemplateWrapperClasses')
+
+include 'Parser'
+project(':Parser').projectDir = new File('C:/TFWWT/Parser')

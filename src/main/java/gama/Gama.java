@@ -1,19 +1,15 @@
 package gama;
 
-import java.util.LinkedList;
+import morphological.structures.storage.*;
+
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import storagestructures.OmoFormList;
-import storagestructures.WordList;
-import storagestructures.BearingPhraseList;
-import storagestructures.SentenceList;
-import storagestructures.ParagraphList;
 
 public class Gama implements GamaAccessInterface {
 
     @Override
-    public OmoFormList getMorfWord(String word) throws Exception {
+    public OmoFormList getMorfWord(String word) {
         return GameJMorfSdk.getMorfWord(word);
     }
 

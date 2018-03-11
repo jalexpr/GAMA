@@ -18,7 +18,9 @@ configurations {
 }
 
 dependencies {
-    morphologicalStructures project(':MorphologicalStructures')
+    compile  project(':MorphologicalStructures')
+    compile  project(':JMorfSdk')
+    compile  project(':Parser')
 }
 
 task copyDictionaryOfMorphologicalStructures(type: Copy) {
