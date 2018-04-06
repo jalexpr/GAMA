@@ -1,5 +1,5 @@
 
-package gama;
+package gama.morfsdk;
 
 import jmorfsdk.JMorfSdk;
 import jmorfsdk.load.JMorfSdkLoad;
@@ -9,7 +9,7 @@ public class GameJMorfSdk {
 
     private final static JMorfSdk JMORFSDK = JMorfSdkLoad.loadInAnalysisMode();
     
-    static OmoFormList getMorfWord(String word) {
+    public static OmoFormList getMorfWord(String word) {
         return JMORFSDK.getAllCharacteristicsOfForm(word);
     }
 

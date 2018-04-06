@@ -1,5 +1,5 @@
 
-import gama.Gama;
+import gama.main.Gama;
 
 public class Example {
     

@@ -5,7 +5,7 @@ apply plugin: 'application'
 version '1.1.2'
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
-mainClassName = 'Running'
+mainClassName = 'Example'
 
 repositories {
     jcenter()
@@ -14,6 +14,8 @@ repositories {
 configurations {
     morphologicalStructures {
         compile.extendsFrom morphologicalStructures
+        compile.extendsFrom jMorfSdk
+        compile.extendsFrom parser
     }
 }
 

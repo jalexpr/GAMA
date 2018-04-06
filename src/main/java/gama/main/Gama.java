@@ -1,5 +1,7 @@
-package gama;
+package gama.main;
 
+import gama.morfsdk.GameJMorfSdk;
+import gama.parser.GamaParser;
 import morphological.structures.storage.*;
 
 import java.util.List;

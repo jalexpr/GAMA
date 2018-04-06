@@ -1,4 +1,4 @@
-package gama;
+package gama.main;
 
 import morphological.structures.storage.*;
 
