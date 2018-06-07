@@ -1,4 +1,3 @@
-
 apply plugin: 'java'
 apply plugin: 'application'
 
@@ -12,11 +11,9 @@ repositories {
 }
 
 configurations {
-    morphologicalStructures {
-        compile.extendsFrom morphologicalStructures
-        compile.extendsFrom jMorfSdk
-        compile.extendsFrom parser
-    }
+    compile.extendsFrom morphologicalStructures
+    compile.extendsFrom jMorfSdk
+    compile.extendsFrom parser
 }
 
 dependencies {

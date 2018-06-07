@@ -4,7 +4,7 @@ import parserstring.Parser;
 
 import java.util.List;
 
-public class GamaParserDefault implements GamaParserInterface {
+class GamaParserDefault implements GamaParserInterface {
 
     @Override
     public List<String> getParserBearingPhrase(String bearingPhrase) {

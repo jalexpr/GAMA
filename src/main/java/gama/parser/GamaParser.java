@@ -2,7 +2,7 @@ package gama.parser;
 
 import java.util.List;
 
-public class GamaParser {
+class GamaParser {
 
     private static GamaParserInterface parser;
 

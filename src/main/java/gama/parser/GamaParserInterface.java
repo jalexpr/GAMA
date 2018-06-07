@@ -2,10 +2,7 @@ package gama.parser;
 
 import java.util.List;
 
-/**
- * Created by User on 03.04.2018.
- */
-public interface GamaParserInterface {
+interface GamaParserInterface {
 
     public List<String> getParserBearingPhrase(String bearingPhrase);
 
