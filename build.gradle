@@ -20,6 +20,7 @@ dependencies {
     compile  project(':MorphologicalStructures')
     compile  project(':JMorfSdk')
     compile  project(':Parser')
+    testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
 task copyDictionaryOfMorphologicalStructures(type: Copy) {
@@ -29,7 +30,6 @@ task copyDictionaryOfMorphologicalStructures(type: Copy) {
 }
 
 task copyDictionaryInJar(type: Copy) {
-
     dependsOn copyDictionaryOfMorphologicalStructures
 
     from 'dictionary'
@@ -38,7 +38,6 @@ task copyDictionaryInJar(type: Copy) {
 }
 
 jar {
-
     dependsOn copyDictionaryInJar
 
     manifest.attributes("Main-Class": mainClassName);

@@ -1,10 +1,13 @@
 package gama.parser;
 
-import parserstring.Parser;
+import parser.string.Parser;
 
 import java.util.List;
 
-class GamaParserDefault implements GamaParserInterface {
+public class GamaParserDefault implements IGamaParser {
+    @Override
+    public void init() {
+    }
 
     @Override
     public List<String> getParserBearingPhrase(String bearingPhrase) {
@@ -25,5 +28,4 @@ class GamaParserDefault implements GamaParserInterface {
     public List<List<List<List<String>>>> getParserText(String text) {
         return Parser.parserText(text.toLowerCase());
     }
-
 }

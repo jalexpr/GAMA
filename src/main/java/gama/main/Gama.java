@@ -1,7 +1,9 @@
 package gama.main;
 
-import gama.morfsdk.GameJMorfSdk;
-import gama.parser.GamaParser;
+import gama.morfsdk.GameMorfSdkDefault;
+import gama.morfsdk.IGamaMorfSdk;
+import gama.parser.GamaParserDefault;
+import gama.parser.IGamaParser;
 import morphological.structures.storage.*;
 
 import java.util.List;
@@ -9,31 +11,46 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Gama implements GamaAccessInterface {
+    public IGamaParser gamaParser = new GamaParserDefault();
+    public IGamaMorfSdk gamaMorfSdk= new GameMorfSdkDefault();
+
+    public void init() {
+        gamaParser.init();
+
+    }
+
+    public void setGamaParser(IGamaParser gamaParser) {
+        this.gamaParser = gamaParser;
+    }
+
+    public void setGamaMorfSdk(IGamaMorfSdk gamaMorfSdk) {
+        this.gamaMorfSdk = gamaMorfSdk;
+    }
 
     @Override
     public OmoFormList getMorfWord(String word) {
-        return GameJMorfSdk.getMorfWord(word);
+        return gamaMorfSdk.getMorfWord(word);
     }
 
     @Override
     public WordList getMorfBearingPhrase(String bearingPhrase) {
-        return getMorfBearingPhrase(GamaParser.getParserBearingPhrase(bearingPhrase));
+        return getMorfBearingPhrase(gamaParser.getParserBearingPhrase(bearingPhrase));
     }
 
     @Override
     public BearingPhraseList getMorfSentence(String sentence) {
-        return getMorfSentence(GamaParser.getParserSentence(sentence));
+        return getMorfSentence(gamaParser.getParserSentence(sentence));
     }
 
     @Override
     public SentenceList getMorfParagraph(String paragraph) {
-        return getMorfParagraph(GamaParser.getParserParagraph(paragraph));
+        return getMorfParagraph(gamaParser.getParserParagraph(paragraph));
     }
 
     @Override
     public ParagraphList getMorfText(String text) {
         ParagraphList morfText = new ParagraphList();
-        GamaParser.getParserText(text).forEach((paragraph) -> {
+        gamaParser.getParserText(text).forEach((paragraph) -> {
             try {
                 morfText.add(getMorfParagraph(paragraph));
             } catch (Exception ex) {

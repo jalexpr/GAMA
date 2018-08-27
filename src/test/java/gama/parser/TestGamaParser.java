@@ -1,15 +1,21 @@
+package gama.parser;
 
-import gama.GamaParser;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.util.HashMap;
 import java.util.List;
-import org.junit.*;
+
+import static org.junit.Assert.assertEquals;
 
 public class TestGamaParser {
-
+    private GamaParserDefault gamaParserDefault = new GamaParserDefault();
     private final HashMap<String, String[]> getParserBearingPhraseData = new HashMap<>();
 
     @Before
     public void setUpGetParserBearingPhrase() {
+        gamaParserDefault.init();
         getParserBearingPhraseData.put("Я иду один по городу!", new String[]{"я", "иду", "один", "по", "городу"});
         getParserBearingPhraseData.put("Я иду, шагаю по Москве!", new String[]{"я", "иду", "шагаю", "по", "москве"});
     }
@@ -24,19 +30,19 @@ public class TestGamaParser {
         getParserBearingPhraseData.entrySet().forEach((entry) -> {
             final String[] expected = entry.getValue();
             final String testData = entry.getKey();
-            final List<String> actual = GamaParser.getParserBearingPhrase(testData);
+            final List<String> actual = gamaParserDefault.getParserBearingPhrase(testData);
             assertEquals(expected.length, actual.size());
             for(int i = 0; i < actual.size(); i++){
                 assertEquals(expected[i], actual.get(i));
             }
         });
     }
-    
-    
+
     private final HashMap<String, String[][]> getParserSentenceData = new HashMap<>();
     
     @Before
     public void setUpGetParserSentence() {
+        gamaParserDefault.init();
         getParserSentenceData.put("Я иду один по городу!", new String[][]{{"я", "иду", "один", "по", "городу"}});
         getParserSentenceData.put("Я иду, шагаю по Москве!", new String[][]{{"я", "иду"},{"шагаю", "по", "москве"}});
         getParserSentenceData.put("Я иду, шагаю по Москве! И мне хорошо.", new String[][]{{"я", "иду"},{"шагаю", "по", "москве"},{"и", "мне", "хорошо"}});
@@ -52,7 +58,7 @@ public class TestGamaParser {
         getParserSentenceData.entrySet().forEach((entry) -> {
             final String[][] expected = entry.getValue();
             final String testData = entry.getKey();
-            final List<List<String>> actual = GamaParser.getParserSentence(testData);
+            final List<List<String>> actual = gamaParserDefault.getParserSentence(testData);
             assertEquals(expected.length, actual.size());
             for(int i = 0; i < actual.size(); i++){
                 List<String> actualGetIndexI = actual.get(i);
