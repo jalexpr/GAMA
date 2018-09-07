@@ -1,9 +1,9 @@
 
 package gama.morfsdk;
 
-import jmorfsdk.JMorfSdk;
-import jmorfsdk.load.JMorfSdkLoad;
-import morphological.structures.storage.OmoFormList;
+import org.tffwt.jmorfsdk.JMorfSdk;
+import org.tffwt.jmorfsdk.load.JMorfSdkLoad;
+import org.tffwt.morphological.structures.storage.OmoFormList;
 
 public class GameMorfSdkDefault implements IGamaMorfSdk {
     private JMorfSdk jMorfSdk;

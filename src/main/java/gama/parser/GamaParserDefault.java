@@ -1,6 +1,6 @@
 package gama.parser;
 
-import parser.string.Parser;
+import org.tfwwt.parser.string.Parser;
 
 import java.util.List;
 

@@ -4,7 +4,7 @@ import gama.morfsdk.GameMorfSdkDefault;
 import gama.morfsdk.IGamaMorfSdk;
 import gama.parser.GamaParserDefault;
 import gama.parser.IGamaParser;
-import morphological.structures.storage.*;
+import org.tffwt.morphological.structures.storage.*;
 
 import java.util.List;
 import java.util.logging.Level;

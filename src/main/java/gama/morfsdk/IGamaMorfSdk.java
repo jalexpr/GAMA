@@ -1,6 +1,6 @@
 package gama.morfsdk;
 
-import morphological.structures.storage.OmoFormList;
+import org.tffwt.morphological.structures.storage.OmoFormList;
 
 public interface IGamaMorfSdk {
     public void init();
