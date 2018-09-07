@@ -1,6 +1,6 @@
-package gama.main;
+package org.tfwwt.gama.main;
 
-import org.tffwt.morphological.structures.storage.*;
+import org.tfwwt.morphological.structures.storage.*;
 
 public interface GamaAccessInterface {
 

@@ -1,10 +1,10 @@
-package gama.main;
+package org.tfwwt.gama.main;
 
-import gama.morfsdk.GameMorfSdkDefault;
-import gama.morfsdk.IGamaMorfSdk;
-import gama.parser.GamaParserDefault;
-import gama.parser.IGamaParser;
-import org.tffwt.morphological.structures.storage.*;
+import org.tfwwt.gama.morfsdk.GameMorfSdkDefault;
+import org.tfwwt.gama.morfsdk.IGamaMorfSdk;
+import org.tfwwt.gama.parser.GamaParserDefault;
+import org.tfwwt.gama.parser.IGamaParser;
+import org.tfwwt.morphological.structures.storage.*;
 
 import java.util.List;
 import java.util.logging.Level;

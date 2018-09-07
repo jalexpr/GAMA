@@ -1,4 +1,4 @@
-package gama.parser;
+package org.tfwwt.gama.parser;
 
 import org.tfwwt.parser.string.Parser;
 

@@ -1,5 +1,5 @@
 
-import gama.main.Gama;
+import org.tfwwt.gama.main.Gama;
 
 public class Example {
     
