@@ -1,10 +1,10 @@
-package org.tfwwt.gama.main;
+package ru.textanalysis.tfwwt.gama.main;
 
-import org.tfwwt.gama.morfsdk.GameMorfSdkDefault;
-import org.tfwwt.gama.morfsdk.IGamaMorfSdk;
-import org.tfwwt.gama.parser.GamaParserDefault;
-import org.tfwwt.gama.parser.IGamaParser;
-import org.tfwwt.morphological.structures.storage.*;
+import ru.textanalysis.tfwwt.gama.morfsdk.GameMorfSdkDefault;
+import ru.textanalysis.tfwwt.gama.morfsdk.IGamaMorfSdk;
+import ru.textanalysis.tfwwt.gama.parser.GamaParserDefault;
+import ru.textanalysis.tfwwt.gama.parser.IGamaParser;
+import ru.textanalysis.tfwwt.morphological.structures.storage.*;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -16,7 +16,7 @@ public class Gama implements GamaAccessInterface {
 
     public void init() {
         gamaParser.init();
-
+        gamaMorfSdk.init();
     }
 
     public void setGamaParser(IGamaParser gamaParser) {

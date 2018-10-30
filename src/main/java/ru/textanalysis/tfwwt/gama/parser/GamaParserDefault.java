@@ -1,6 +1,6 @@
-package org.tfwwt.gama.parser;
+package ru.textanalysis.tfwwt.gama.parser;
 
-import org.tfwwt.parser.string.Parser;
+import ru.textanalysis.tfwwt.parser.string.Parser;
 
 import java.util.List;
 

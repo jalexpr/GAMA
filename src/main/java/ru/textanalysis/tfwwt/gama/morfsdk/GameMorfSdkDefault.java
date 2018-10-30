@@ -1,9 +1,9 @@
 
-package org.tfwwt.gama.morfsdk;
+package ru.textanalysis.tfwwt.gama.morfsdk;
 
-import org.tfwwt.jmorfsdk.JMorfSdk;
-import org.tfwwt.jmorfsdk.load.JMorfSdkLoad;
-import org.tfwwt.morphological.structures.storage.OmoFormList;
+import ru.textanalysis.tfwwt.jmorfsdk.JMorfSdk;
+import ru.textanalysis.tfwwt.jmorfsdk.load.JMorfSdkLoad;
+import ru.textanalysis.tfwwt.morphological.structures.storage.OmoFormList;
 
 public class GameMorfSdkDefault implements IGamaMorfSdk {
     private JMorfSdk jMorfSdk;

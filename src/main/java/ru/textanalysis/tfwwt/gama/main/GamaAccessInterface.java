@@ -1,6 +1,6 @@
-package org.tfwwt.gama.main;
+package ru.textanalysis.tfwwt.gama.main;
 
-import org.tfwwt.morphological.structures.storage.*;
+import ru.textanalysis.tfwwt.morphological.structures.storage.*;
 
 public interface GamaAccessInterface {
 

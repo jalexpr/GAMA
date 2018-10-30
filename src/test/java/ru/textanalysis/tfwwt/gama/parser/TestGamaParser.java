@@ -1,4 +1,4 @@
-package org.tfwwt.gama.parser;
+package ru.textanalysis.tfwwt.gama.parser;
 
 import org.junit.After;
 import org.junit.Before;

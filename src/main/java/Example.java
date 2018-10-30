@@ -1,11 +1,12 @@
 
-import org.tfwwt.gama.main.Gama;
+import ru.textanalysis.tfwwt.gama.main.Gama;
 
 public class Example {
     
     public static void main(String[] args) {
 
         Gama gama = new Gama();
+        gama.init();
 
         gama.getMorfWord("мама").forEach((omoForm) -> {
             System.out.println(omoForm);
