@@ -10,7 +10,7 @@ public class GameMorfSdkDefault implements IGamaMorfSdk {
 
     @Override
     public void init() {
-        jMorfSdk = JMorfSdkLoad.loadInAnalysisMode();
+        jMorfSdk = JMorfSdkLoad.loadFullLibrary();
     }
 
     @Override

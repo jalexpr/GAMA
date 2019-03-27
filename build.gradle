@@ -20,11 +20,12 @@ dependencies {
     compile  project(':MorphologicalStructures')
     compile  project(':JMorfSdk')
     compile  project(':Parser')
+    compile  project(':TemplateWrapperClasses')
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
 task copyDictionaryOfMorphologicalStructures(type: Copy) {
-    from 'C:/TFWWT/MorphologicalStructures/dictionary/'
+    from '../MorphologicalStructures/dictionary/'
     into 'dictionary'
     include 'dictionary.*'
 }
