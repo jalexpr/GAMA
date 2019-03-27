@@ -1,17 +1,21 @@
 package ru.textanalysis.tfwwt.gama.main;
 
-import ru.textanalysis.tfwwt.morphological.structures.storage.*;
+import ru.textanalysis.tfwwt.morphological.structures.internal.ref.RefOmoFormList;
+import ru.textanalysis.tfwwt.morphological.structures.storage.ref.RefBearingPhraseList;
+import ru.textanalysis.tfwwt.morphological.structures.storage.ref.RefParagraphList;
+import ru.textanalysis.tfwwt.morphological.structures.storage.ref.RefSentenceList;
+import ru.textanalysis.tfwwt.morphological.structures.storage.ref.RefWordList;
 
 public interface GamaAccessInterface {
 
-    public OmoFormList getMorfWord(String word) throws Exception;
+    RefOmoFormList getMorphWord(String word) throws Exception;
 
-    public WordList getMorfBearingPhrase(String bearingPhrase);
+    RefWordList getMorphBearingPhrase(String bearingPhrase);
 
-    public BearingPhraseList getMorfSentence(String sentence);
+    RefBearingPhraseList getMorphSentence(String sentence);
 
-    public SentenceList getMorfParagraph(String paragraph);
+    RefSentenceList getMorphParagraph(String paragraph);
 
-    public ParagraphList getMorfText(String text);
+    RefParagraphList getMorphText(String text);
 
 }

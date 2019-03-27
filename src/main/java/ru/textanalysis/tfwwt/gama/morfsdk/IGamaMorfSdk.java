@@ -1,8 +1,8 @@
 package ru.textanalysis.tfwwt.gama.morfsdk;
 
-import ru.textanalysis.tfwwt.morphological.structures.storage.OmoFormList;
+import ru.textanalysis.tfwwt.morphological.structures.internal.ref.RefOmoFormList;
 
 public interface IGamaMorfSdk {
-    public void init();
-    public OmoFormList getMorfWord(String word);
+    void init();
+    RefOmoFormList getMorphWord(String word);
 }

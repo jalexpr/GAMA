@@ -1,94 +1,98 @@
 package ru.textanalysis.tfwwt.gama.main;
 
-import ru.textanalysis.tfwwt.gama.morfsdk.GameMorfSdkDefault;
+import ru.textanalysis.tfwwt.gama.morfsdk.GameMorphSdkDefault;
 import ru.textanalysis.tfwwt.gama.morfsdk.IGamaMorfSdk;
 import ru.textanalysis.tfwwt.gama.parser.GamaParserDefault;
 import ru.textanalysis.tfwwt.gama.parser.IGamaParser;
-import ru.textanalysis.tfwwt.morphological.structures.storage.*;
+import ru.textanalysis.tfwwt.morphological.structures.internal.ref.RefOmoFormList;
+import ru.textanalysis.tfwwt.morphological.structures.storage.ref.RefBearingPhraseList;
+import ru.textanalysis.tfwwt.morphological.structures.storage.ref.RefParagraphList;
+import ru.textanalysis.tfwwt.morphological.structures.storage.ref.RefSentenceList;
+import ru.textanalysis.tfwwt.morphological.structures.storage.ref.RefWordList;
 
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Gama implements GamaAccessInterface {
-    public IGamaParser gamaParser = new GamaParserDefault();
-    public IGamaMorfSdk gamaMorfSdk= new GameMorfSdkDefault();
+    private IGamaParser gamaParser = new GamaParserDefault();
+    private IGamaMorfSdk gamaMorphSdk = new GameMorphSdkDefault();
 
     public void init() {
         gamaParser.init();
-        gamaMorfSdk.init();
+        gamaMorphSdk.init();
     }
 
     public void setGamaParser(IGamaParser gamaParser) {
         this.gamaParser = gamaParser;
     }
 
-    public void setGamaMorfSdk(IGamaMorfSdk gamaMorfSdk) {
-        this.gamaMorfSdk = gamaMorfSdk;
+    public void setGamaMorphSdk(IGamaMorfSdk gamaMorphSdk) {
+        this.gamaMorphSdk = gamaMorphSdk;
     }
 
     @Override
-    public OmoFormList getMorfWord(String word) {
-        return gamaMorfSdk.getMorfWord(word);
+    public RefOmoFormList getMorphWord(String word) {
+        return gamaMorphSdk.getMorphWord(word);
     }
 
     @Override
-    public WordList getMorfBearingPhrase(String bearingPhrase) {
-        return getMorfBearingPhrase(gamaParser.getParserBearingPhrase(bearingPhrase));
+    public RefWordList getMorphBearingPhrase(String bearingPhrase) {
+        return getMorphBearingPhrase(gamaParser.getParserBearingPhrase(bearingPhrase));
     }
 
     @Override
-    public BearingPhraseList getMorfSentence(String sentence) {
-        return getMorfSentence(gamaParser.getParserSentence(sentence));
+    public RefBearingPhraseList getMorphSentence(String sentence) {
+        return getMorphSentence(gamaParser.getParserSentence(sentence));
     }
 
     @Override
-    public SentenceList getMorfParagraph(String paragraph) {
-        return getMorfParagraph(gamaParser.getParserParagraph(paragraph));
+    public RefSentenceList getMorphParagraph(String paragraph) {
+        return getMorphParagraph(gamaParser.getParserParagraph(paragraph));
     }
 
     @Override
-    public ParagraphList getMorfText(String text) {
-        ParagraphList morfText = new ParagraphList();
+    public RefParagraphList getMorphText(String text) {
+        RefParagraphList morphText = new RefParagraphList();
         gamaParser.getParserText(text).forEach((paragraph) -> {
             try {
-                morfText.add(getMorfParagraph(paragraph));
+                morphText.add(getMorphParagraph(paragraph));
             } catch (Exception ex) {
                 Logger.getLogger(Gama.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        return morfText;
+        return morphText;
     }
 
-    private WordList getMorfBearingPhrase(List<String> bearingPhrase){
-        WordList morfBearingPhrase = new WordList();
+    private RefWordList getMorphBearingPhrase(List<String> bearingPhrase) {
+        RefWordList morphBearingPhrase = new RefWordList();
         bearingPhrase.forEach((word) -> {
             try {
-                morfBearingPhrase.add(getMorfWord(word));
+                morphBearingPhrase.add(getMorphWord(word));
             } catch (Exception ex) {
                 Logger.getLogger(Gama.class.getName()).log(Level.SEVERE, String.format("В опорном обороте %s\n", bearingPhrase), ex);
             }
         });
-        return morfBearingPhrase;
+        return morphBearingPhrase;
     }
 
-    public BearingPhraseList getMorfSentence(List<List<String>> sentence) {
-        BearingPhraseList morfSentence = new BearingPhraseList();
+    private RefBearingPhraseList getMorphSentence(List<List<String>> sentence) {
+        RefBearingPhraseList morphSentence = new RefBearingPhraseList();
         sentence.forEach((bearingPhrase) -> {
-            morfSentence.add(getMorfBearingPhrase(bearingPhrase));
+            morphSentence.add(getMorphBearingPhrase(bearingPhrase));
         });
-        return morfSentence;
+        return morphSentence;
     }
 
-    public SentenceList getMorfParagraph(List<List<List<String>>> paragraph) {
-        SentenceList morfSentence = new SentenceList();
+    private RefSentenceList getMorphParagraph(List<List<List<String>>> paragraph) {
+        RefSentenceList morphSentence = new RefSentenceList();
         paragraph.forEach((sentence) -> {
             try {
-                morfSentence.add(getMorfSentence(sentence));
+                morphSentence.add(getMorphSentence(sentence));
             } catch (Exception ex) {
                 Logger.getLogger(Gama.class.getName()).log(Level.SEVERE, String.format("Парсер не верно распарсил предложение \"%s\"\n", sentence), ex);
             }
         });
-        return morfSentence;
+        return morphSentence;
     }
 }

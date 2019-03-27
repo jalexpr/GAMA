@@ -3,9 +3,9 @@ package ru.textanalysis.tfwwt.gama.morfsdk;
 
 import ru.textanalysis.tfwwt.jmorfsdk.JMorfSdk;
 import ru.textanalysis.tfwwt.jmorfsdk.load.JMorfSdkLoad;
-import ru.textanalysis.tfwwt.morphological.structures.storage.OmoFormList;
+import ru.textanalysis.tfwwt.morphological.structures.internal.ref.RefOmoFormList;
 
-public class GameMorfSdkDefault implements IGamaMorfSdk {
+public class GameMorphSdkDefault implements IGamaMorfSdk {
     private JMorfSdk jMorfSdk;
 
     @Override
@@ -14,7 +14,7 @@ public class GameMorfSdkDefault implements IGamaMorfSdk {
     }
 
     @Override
-    public OmoFormList getMorfWord(String word) {
-        return jMorfSdk.getAllCharacteristicsOfForm(word);
+    public RefOmoFormList getMorphWord(String word) {
+        return jMorfSdk.getRefOmoFormList(word);
     }
 }
