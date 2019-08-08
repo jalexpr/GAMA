@@ -1,14 +1,14 @@
-package ru.textanalysis.tfwwt.gama.main;
+package ru.textanalysis.tawt.gama.main;
 
-import ru.textanalysis.tfwwt.gama.morfsdk.GameMorphSdkDefault;
-import ru.textanalysis.tfwwt.gama.morfsdk.IGamaMorfSdk;
-import ru.textanalysis.tfwwt.gama.parser.GamaParserDefault;
-import ru.textanalysis.tfwwt.gama.parser.IGamaParser;
-import ru.textanalysis.tfwwt.morphological.structures.internal.ref.RefOmoFormList;
-import ru.textanalysis.tfwwt.morphological.structures.storage.ref.RefBearingPhraseList;
-import ru.textanalysis.tfwwt.morphological.structures.storage.ref.RefParagraphList;
-import ru.textanalysis.tfwwt.morphological.structures.storage.ref.RefSentenceList;
-import ru.textanalysis.tfwwt.morphological.structures.storage.ref.RefWordList;
+import ru.textanalysis.tawt.gama.morfsdk.GameMorphSdkDefault;
+import ru.textanalysis.tawt.gama.morfsdk.IGamaMorfSdk;
+import ru.textanalysis.tawt.gama.parser.GamaParserDefault;
+import ru.textanalysis.tawt.gama.parser.IGamaParser;
+import ru.textanalysis.tawt.ms.internal.ref.RefOmoFormList;
+import ru.textanalysis.tawt.ms.storage.ref.RefBearingPhraseList;
+import ru.textanalysis.tawt.ms.storage.ref.RefParagraphList;
+import ru.textanalysis.tawt.ms.storage.ref.RefSentenceList;
+import ru.textanalysis.tawt.ms.storage.ref.RefWordList;
 
 import java.util.List;
 import java.util.logging.Level;

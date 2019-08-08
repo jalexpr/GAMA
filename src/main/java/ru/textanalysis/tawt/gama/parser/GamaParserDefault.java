@@ -1,31 +1,33 @@
-package ru.textanalysis.tfwwt.gama.parser;
+package ru.textanalysis.tawt.gama.parser;
 
-import ru.textanalysis.tfwwt.parser.string.Parser;
+import ru.textanalysis.tawt.parser.text.ParserImpl;
 
 import java.util.List;
 
 public class GamaParserDefault implements IGamaParser {
+    private ParserImpl parser = new ParserImpl();
+
     @Override
     public void init() {
     }
 
     @Override
     public List<String> getParserBearingPhrase(String bearingPhrase) {
-        return Parser.parserBasicsPhase(bearingPhrase.toLowerCase());
+        return parser.parserBasicsPhase(bearingPhrase.toLowerCase());
     }
 
     @Override
     public List<List<String>> getParserSentence(String sentence) {
-        return Parser.parserSentence(sentence.toLowerCase());
+        return parser.parserSentence(sentence.toLowerCase());
     }
 
     @Override
     public List<List<List<String>>> getParserParagraph(String sentence) {
-        return Parser.parserParagraph(sentence.toLowerCase());
+        return parser.parserParagraph(sentence.toLowerCase());
     }
 
     @Override
     public List<List<List<List<String>>>> getParserText(String text) {
-        return Parser.parserText(text.toLowerCase());
+        return parser.parserText(text.toLowerCase());
     }
 }

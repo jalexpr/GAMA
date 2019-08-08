@@ -1,4 +1,4 @@
-package ru.textanalysis.tfwwt.gama.parser;
+package ru.textanalysis.tawt.gama.parser;
 
 import java.util.List;
 
