@@ -1,6 +1,6 @@
 package ru.textanalysis.tawt.gama.parser;
 
-import ru.textanalysis.tawt.parser.text.ParserImpl;
+import ru.textanalysis.tawt.graphematic.parser.text.ParserImpl;
 
 import java.util.List;
 
