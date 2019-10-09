@@ -1,6 +1,7 @@
 package ru.textanalysis.tawt.gama;
 
 import ru.textanalysis.tawt.gama.main.Gama;
+import ru.textanalysis.tawt.ms.storage.ref.RefSentenceList;
 
 public class ExampleGama {
 
@@ -8,6 +9,11 @@ public class ExampleGama {
 
         Gama gama = new Gama();
         gama.init();
+        RefSentenceList sentenceList = gama.getMorphParagraph("Осенний марафон -"
+                + " стало ясно, что будет с российской валютой. Справедливый курс,"
+                + " по мнению аналитиков, — на уровне 65-66.");
+        System.out.println(sentenceList);
+
 
         gama.getMorphWord("мама").getOmoForm().forEach(System.out::println);
 
