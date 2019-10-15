@@ -1,11 +1,11 @@
 package ru.textanalysis.tawt.gama.parser;
 
-import ru.textanalysis.tawt.graphematic.parser.text.ParserImpl;
+import ru.textanalysis.tawt.graphematic.parser.text.GParserImpl;
 
 import java.util.List;
 
 public class GamaParserDefault implements IGamaParser {
-    private ParserImpl parser = new ParserImpl();
+    private GParserImpl parser = new GParserImpl();
 
     @Override
     public void init() {
