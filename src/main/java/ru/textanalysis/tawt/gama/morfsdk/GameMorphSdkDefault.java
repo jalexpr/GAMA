@@ -3,6 +3,7 @@ package ru.textanalysis.tawt.gama.morfsdk;
 
 import ru.textanalysis.tawt.jmorfsdk.JMorfSdk;
 import ru.textanalysis.tawt.jmorfsdk.loader.JMorfSdkFactory;
+import ru.textanalysis.tawt.ms.interfaces.gama.IGamaMorfSdk;
 import ru.textanalysis.tawt.ms.internal.ref.RefOmoFormList;
 
 import java.util.List;

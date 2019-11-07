@@ -1,9 +1,11 @@
 package ru.textanalysis.tawt.gama.main;
 
+import org.slf4j.LoggerFactory;
 import ru.textanalysis.tawt.gama.morfsdk.GameMorphSdkDefault;
-import ru.textanalysis.tawt.gama.morfsdk.IGamaMorfSdk;
 import ru.textanalysis.tawt.gama.parser.GamaParserDefault;
-import ru.textanalysis.tawt.gama.parser.IGamaParser;
+import ru.textanalysis.tawt.ms.interfaces.gama.GamaAccessInterface;
+import ru.textanalysis.tawt.ms.interfaces.gama.IGamaMorfSdk;
+import ru.textanalysis.tawt.ms.interfaces.gama.IGamaParser;
 import ru.textanalysis.tawt.ms.internal.ref.RefOmoFormList;
 import ru.textanalysis.tawt.ms.storage.ref.RefBearingPhraseList;
 import ru.textanalysis.tawt.ms.storage.ref.RefParagraphList;
@@ -15,12 +17,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Gama implements GamaAccessInterface {
+    private final org.slf4j.Logger log = LoggerFactory.getLogger(getClass());
+
     private IGamaParser gamaParser = new GamaParserDefault();
     private IGamaMorfSdk gamaMorphSdk = new GameMorphSdkDefault();
 
+    @Override
     public void init() {
         gamaParser.init();
         gamaMorphSdk.init();
+        log.debug("Gama is initialized!");
     }
 
     public void setGamaParser(IGamaParser gamaParser) {
