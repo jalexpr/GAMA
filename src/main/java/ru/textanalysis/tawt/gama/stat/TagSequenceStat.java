@@ -13,6 +13,7 @@ public class TagSequenceStat {
 
     private static final Logger log = Logger.getLogger(TagSequenceStat.class.getName());
     private final Map<String, Integer> tagSequence;
+    private final List<Sequence> tagSequenceList;
     private final List<String> tagVer;
 
     /**
@@ -21,6 +22,7 @@ public class TagSequenceStat {
     public TagSequenceStat() {
         tagSequence = new HashMap<>();
         tagVer = new ArrayList<>();
+        tagSequenceList = new ArrayList<>();
     }
 
     /**
@@ -41,25 +43,21 @@ public class TagSequenceStat {
      * Расчёт вероятности встречи всех последовательностей
      */
     public void getTagVers() {
-        Object[] tempTagSequence = this.tagSequence.entrySet().toArray();
-        Arrays.sort(tempTagSequence, new Comparator() {
-            public int compare(Object o1, Object o2) {
-                return ((Map.Entry<String, Integer>) o2).getValue()
-                        .compareTo(((Map.Entry<String, Integer>) o1).getValue());
-            }
-        });
+        var keys = this.tagSequence.keySet().toArray(new String[0]);
+        var values = this.tagSequence.values().toArray(new Integer[0]);
 
-        List<Object> tagSequence = new ArrayList<>(Arrays.asList(tempTagSequence));
+        for (int i = 0; i < keys.length; i++) {
+            tagSequenceList.add(new Sequence(keys[i], values[i]));
+        }
 
-        for (int i = tagSequence.size() - 1; i >= 0; i--) {
-            if (tagSequence.get(i).toString().contains("null")) {
-                tagSequence.remove(i);
+        for (int i = tagSequenceList.size() - 1; i >= 0; i--) {
+            if (tagSequenceList.get(i).toString().contains("null")) {
+                tagSequenceList.remove(i);
             }
         }
 
-        for (int i = 0; i < tagSequence.size(); i++) {
-            String[] sequence = tagSequence.get(i).toString().split("=");
-            String[] tagSequenceValue = sequence[0].split("\\|");
+        for (int i = 0; i < tagSequenceList.size(); i++) {
+            String[] tagSequenceValue = tagSequenceList.get(i).getSequence().split("\\|");
             for (int j = 0; j < tagSequenceValue.length; j++) {
                 if (Objects.equals(tagSequenceValue[j], "*")) {
                     tagSequenceValue[j] = "\\*";
@@ -92,7 +90,7 @@ public class TagSequenceStat {
                     cases.add(caseSequence.toString());
                 }
 
-                calculationVers(i, caseIndex, tagSequence, cases);
+                calculationVers(i, caseIndex, tagSequenceList, cases);
             } else {
                 List<String> tags = new ArrayList<>();
 
@@ -120,7 +118,7 @@ public class TagSequenceStat {
                     tags.add(tagsSequence.toString());
                 }
 
-                calculationVers(i, caseIndex, tagSequence, tags);
+                calculationVers(i, caseIndex, tagSequenceList, tags);
             }
         }
     }
@@ -133,29 +131,31 @@ public class TagSequenceStat {
         return tagSequence;
     }
 
-    private void calculationVers(int index, int caseIndex, List<Object> tagSequence, List<String> constitutes) {
+    public List<Sequence> getTagSequenceList() {
+        return tagSequenceList;
+    }
+
+    private void calculationVers(int index, int caseIndex, List<Sequence> tagSequence, List<String> constitutes) {
         if (caseIndex != -1) {
             int sum = 0;
-            for (Object o : tagSequence) {
+            for (Sequence s : tagSequence) {
                 Pattern pattern = Pattern.compile(constitutes.get(caseIndex));
-                Matcher matcher = pattern.matcher(o.toString());
+                Matcher matcher = pattern.matcher(s.toString());
                 if (matcher.find()) {
-                    String[] tagSequenceValue = o.toString().split("=");
-                    sum += Integer.parseInt(tagSequenceValue[1]);
+                    sum += s.getOccurrence();
                 }
             }
             DecimalFormat df = new DecimalFormat("0.#");
             df.setMaximumFractionDigits(7);
-            this.tagVer.add(String.valueOf(df.format((double) Integer.parseInt(tagSequence.get(index).toString().split("=")[1]) / (double) sum)));
+            this.tagVer.add(String.valueOf(df.format((double) tagSequence.get(index).getOccurrence() / (double) sum)));
         } else {
             for (int i = 0; i < constitutes.size(); i++) {
                 int sum = 0;
-                for (Object o : tagSequence) {
+                for (Sequence s : tagSequence) {
                     Pattern pattern = Pattern.compile(constitutes.get(i));
-                    Matcher matcher = pattern.matcher(o.toString());
+                    Matcher matcher = pattern.matcher(s.toString());
                     if (matcher.find()) {
-                        String[] tagSequenceValue = o.toString().split("=");
-                        sum += Integer.parseInt(tagSequenceValue[1]);
+                        sum += s.getOccurrence();
                     }
                 }
                 DecimalFormat df = new DecimalFormat("0.#");
@@ -170,9 +170,9 @@ public class TagSequenceStat {
                     }
                 } else {
                     if (i == 0) {
-                        this.tagVer.add(String.valueOf(df.format((double) Integer.parseInt(tagSequence.get(index).toString().split("=")[1]) / (double) sum)));
+                        this.tagVer.add(String.valueOf(df.format((double) tagSequence.get(index).getOccurrence() / (double) sum)));
                     } else {
-                        this.tagVer.set(this.tagVer.size() - 1, this.tagVer.get(this.tagVer.size() - 1) + df.format((double) Integer.parseInt(tagSequence.get(index).toString().split("=")[1]) / (double) sum));
+                        this.tagVer.set(this.tagVer.size() - 1, this.tagVer.get(this.tagVer.size() - 1) + df.format((double) tagSequence.get(index).getOccurrence() / (double) sum));
                     }
                 }
                 if (i < constitutes.size() - 1) {

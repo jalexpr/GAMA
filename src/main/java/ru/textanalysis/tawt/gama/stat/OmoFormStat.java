@@ -85,17 +85,8 @@ public class OmoFormStat {
         wordCharacteristicsStat.getWordVers(StopWords);
         file.getParentFile().mkdirs();
         try (FileOutputStream stream = new FileOutputStream(file)) {
-
             if (tagSequenceStat.getTagVer().size() > 0) {
-                Object[] tempTagSequence = tagSequenceStat.getTagSequence().entrySet().toArray();
-                Arrays.sort(tempTagSequence, new Comparator() {
-                    public int compare(Object o1, Object o2) {
-                        return ((Map.Entry<String, Integer>) o2).getValue()
-                                .compareTo(((Map.Entry<String, Integer>) o1).getValue());
-                    }
-                });
-
-                List<Object> tagSequence = new ArrayList<>(Arrays.asList(tempTagSequence));
+                List<Sequence> tagSequence = new ArrayList<>(tagSequenceStat.getTagSequenceList());
 
                 for (int i = tagSequence.size() - 1; i >= 0; i--) {
                     if (tagSequence.get(i).toString().contains("null")) {
@@ -104,8 +95,7 @@ public class OmoFormStat {
                 }
 
                 for (int i = 0; i < tagSequenceStat.getTagVer().size(); i++) {
-                    String[] tagSequenceValues = tagSequence.get(i).toString().split("=");
-                    String tagSequenceProbability = tagSequenceValues[0] + ":" + tagSequenceStat.getTagVer().get(i).replaceAll(",", ".");
+                    String tagSequenceProbability = tagSequence.get(i).getSequence() + ":" + tagSequenceStat.getTagVer().get(i).replaceAll(",", ".");
                     byte[] bytesCount = tagSequenceProbability.getBytes();
                     stream.write(ByteBuffer.allocate(2).putShort((short) bytesCount.length).array());
                     stream.write(bytesCount);

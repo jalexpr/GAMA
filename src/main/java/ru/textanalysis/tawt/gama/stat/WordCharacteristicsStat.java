@@ -51,7 +51,11 @@ public class WordCharacteristicsStat {
             }
         });
 
-        List<Object> wordSequence = new ArrayList<>(Arrays.asList(tempWordSequence));
+        List<Sequence> wordSequence = new ArrayList<>();
+        for (int i = 0; i < tempWordSequence.length; i++) {
+            String[] tmp = tempWordSequence[i].toString().split("=");
+            wordSequence.add(new Sequence(tmp[0], Integer.parseInt(tmp[1])));
+        }
 
         for (int i = wordSequence.size() - 1; i >= 0; i--) {
             if (StopWords.containsKey(wordSequence.get(i).toString().split("\\|")[0])) {
@@ -75,30 +79,27 @@ public class WordCharacteristicsStat {
 
         String[] wordProbabilities = new String[wordSequence.size()];
 
-        for (Object o : wordSequence) {
-            String[] sequence = o.toString().split("=");
-            String[] wordSequenceValue = sequence[0].split("\\|");
+        for (Sequence s : wordSequence) {
+            String[] wordSequenceValue = s.getSequence().split("\\|");
             if (wordTagSequence.containsKey(wordSequenceValue[1])) {
                 int curCount = wordTagSequence.get(wordSequenceValue[1]);
-                wordTagSequence.put(wordSequenceValue[1], curCount + Integer.parseInt(sequence[1]));
+                wordTagSequence.put(wordSequenceValue[1], curCount + s.getOccurrence());
             } else {
-                wordTagSequence.put(wordSequenceValue[1], Integer.parseInt(sequence[1]));
+                wordTagSequence.put(wordSequenceValue[1], s.getOccurrence());
             }
         }
 
         for (int i = 0; i < wordSequence.size(); i++) {
-            String[] sequence = wordSequence.get(i).toString().split("=");
-            String[] wordSequenceValue = sequence[0].split("\\|");
+            String[] wordSequenceValue = wordSequence.get(i).getSequence().split("\\|");
             DecimalFormat df = new DecimalFormat("0.#");
             df.setMaximumFractionDigits(7);
-            wordProbabilities[i] = String.valueOf(df.format((double) Integer.parseInt(sequence[1]) / (double) wordTagSequence.get(wordSequenceValue[1])));
+            wordProbabilities[i] = String.valueOf(df.format((double) wordSequence.get(i).getOccurrence() / (double) wordTagSequence.get(wordSequenceValue[1])));
         }
 
         List<String> wordsProbabilities = new ArrayList<>();
 
         for (int i = 0; i < wordProbabilities.length; i++) {
-            String[] sequence = wordSequence.get(i).toString().split("=");
-            String[] wordSequenceValue = sequence[0].split("\\|");
+            String[] wordSequenceValue = wordSequence.get(i).getSequence().split("\\|");
             boolean found = false;
             for (String wordsProbability : wordsProbabilities) {
                 Pattern pattern = Pattern.compile("^" + wordSequenceValue[0] + ":");
