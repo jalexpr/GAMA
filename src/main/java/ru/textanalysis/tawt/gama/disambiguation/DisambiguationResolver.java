@@ -97,25 +97,25 @@ public class DisambiguationResolver {
             for (Form form : forms) {
                 String caseName = MorfologyParametersHelper.getParametersName(form.getMorfCharacteristicsByIdentifier(MorfologyParameters.Case.IDENTIFIER));
                 if (caseName != null && !caseName.equals("UNCLEARGENDER")) {
-                    String[] t31 = "0".split("\\|");
-                    String[] t32 = "0".split("\\|");
-                    String[] t33 = "0".split("\\|");
-                    String[] t21 = "0".split("\\|");
-                    String[] t22 = "0".split("\\|");
+                    String[] t31 = {"0"};
+                    String[] t32 = {"0"};
+                    String[] t33 = {"0"};
+                    String[] t21 = {"0"};
+                    String[] t22 = {"0"};
 
                     if ((i - 1) >= 0) {
-                        t21 = gamaMorphSdk.getTagOccurrence(wordTags.get(i - 1) + "|" + caseName).split("\\|");
+                        t21 = gamaMorphSdk.getTagOccurrence(wordTags.get(i - 1) + "|" + "case-" + caseName).split("\\|");
                         if ((i + 1) < wordTags.size()) {
-                            t31 = gamaMorphSdk.getTagOccurrence(wordTags.get(i - 1) + "|" + caseName + "|" + wordTags.get(i + 1)).split("\\|");
+                            t31 = gamaMorphSdk.getTagOccurrence(wordTags.get(i - 1) + "|" + "case-" + caseName + "|" + wordTags.get(i + 1)).split("\\|");
                         }
                         if ((i - 2) >= 0) {
-                            t32 = gamaMorphSdk.getTagOccurrence(wordTags.get(i - 2) + "|" + wordTags.get(i - 1) + "|" + caseName).split("\\|");
+                            t32 = gamaMorphSdk.getTagOccurrence(wordTags.get(i - 2) + "|" + wordTags.get(i - 1) + "|" + "case-" + caseName).split("\\|");
                         }
                     }
                     if ((i + 1) < wordTags.size()) {
-                        t22 = gamaMorphSdk.getTagOccurrence(caseName + "|" + wordTags.get(i + 1)).split("\\|");
+                        t22 = gamaMorphSdk.getTagOccurrence("case-" + caseName + "|" + wordTags.get(i + 1)).split("\\|");
                         if ((i + 2) < wordTags.size()) {
-                            t33 = gamaMorphSdk.getTagOccurrence(caseName + "|" + wordTags.get(i + 1) + "|" + wordTags.get(i + 2)).split("\\|");
+                            t33 = gamaMorphSdk.getTagOccurrence("case-" + caseName + "|" + wordTags.get(i + 1) + "|" + wordTags.get(i + 2)).split("\\|");
                         }
                     }
 
@@ -146,11 +146,11 @@ public class DisambiguationResolver {
         List<Double> counts = new ArrayList<>();
         String[] tags = wordTags.get(i).split("\\|");
         for (String tag : tags) {
-            String[] s31 = "0".split("\\|");
-            String[] s32 = "0".split("\\|");
-            String[] s33 = "0".split("\\|");
-            String[] s21 = "0".split("\\|");
-            String[] s22 = "0".split("\\|");
+            String[] s31 = {"0"};
+            String[] s32 = {"0"};
+            String[] s33 = {"0"};
+            String[] s21 = {"0"};
+            String[] s22 = {"0"};
             if ((i - 1) >= 0) {
                 s21 = gamaMorphSdk.getTagOccurrence(wordTags.get(i - 1) + "|" + tag).split("\\|");
                 if ((i + 1) < wordTags.size()) {
