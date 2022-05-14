@@ -66,7 +66,7 @@ public class TagSequenceStat {
             String caseName = "";
             int caseIndex = -1;
             for (int tagSeq = 0; tagSeq < tagSequenceValue.length; tagSeq++) {
-                if (tagSequenceValue[tagSeq].matches("[a-zA-Z]+2?")) {
+                if (tagSequenceValue[tagSeq].matches("(case)-[a-zA-Z]+([0-9]+)?")) {
                     caseName = tagSequenceValue[tagSeq];
                     caseIndex = tagSeq;
                 }

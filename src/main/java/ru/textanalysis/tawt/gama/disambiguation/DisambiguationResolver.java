@@ -64,12 +64,8 @@ public class DisambiguationResolver {
             int finalI = i;
             List<Form> forms = new ArrayList<>();
             if (!wordTags.get(i).contains("|")) {
-                if (wordTags.get(i).contains(":")) {
-                    String[] wt = wordTags.get(i).split(":");
-                    forms = bearingPhrase.get(i).getOmoForms().stream().filter(c -> (c.getTypeOfSpeech() == Byte.parseByte(wt[0])) && (Objects.equals(MorfologyParametersHelper.getParametersName(c.getMorfCharacteristicsByIdentifier(MorfologyParameters.Case.IDENTIFIER)), wt[1]))).collect(Collectors.toList());
-                } else {
-                    forms = bearingPhrase.get(i).getOmoForms().stream().filter(c -> c.getTypeOfSpeech() == Byte.parseByte(wordTags.get(finalI))).collect(Collectors.toList());
-                }
+                String[] wt = wordTags.get(i).split(":");
+                forms = bearingPhrase.get(i).getOmoForms().stream().filter(c -> (c.getTypeOfSpeech() == Byte.parseByte(wt[0]) && (!wordTags.get(finalI).contains(":case-") || Objects.equals(MorfologyParametersHelper.getParametersName(c.getMorfCharacteristicsByIdentifier(MorfologyParameters.Case.IDENTIFIER)), wt[1].split("-")[1])))).collect(Collectors.toList());
             }
             if (forms.size() == 0) {
                 forms = bearingPhrase.get(i).getOmoForms();
@@ -127,7 +123,7 @@ public class DisambiguationResolver {
                 }
             }
             if (caseCounts.size() != 0 && Collections.max(caseCounts) != 0) {
-                wordTags.set(i, wordTags.get(i) + ":" + MorfologyParametersHelper.getParametersName(forms.get(caseCounts.indexOf(Collections.max(caseCounts))).getMorfCharacteristicsByIdentifier(MorfologyParameters.Case.IDENTIFIER)));
+                wordTags.set(i, wordTags.get(i) + ":" + "case-" + MorfologyParametersHelper.getParametersName(forms.get(caseCounts.indexOf(Collections.max(caseCounts))).getMorfCharacteristicsByIdentifier(MorfologyParameters.Case.IDENTIFIER)));
             } else {
                 wordTags.set(i, wordTags.get(i));
             }
