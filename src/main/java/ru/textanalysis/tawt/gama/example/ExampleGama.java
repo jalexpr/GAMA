@@ -30,8 +30,8 @@ public class ExampleGama {
 		String str8 = "длинной";
 		String str9 = "стены";
 		String str10 = "дома";
-		Long start;
-		Long end;
+		long start;
+		long end;
 
 		System.out.println("gParser");
 		for (int i = 0; i < 10; i++) {
