@@ -27,7 +27,14 @@ public class GamaImpl implements Gama {
 	public void init() {
 		gamaParser.init();
 		gamaMorphSdk.init();
-		disambiguationResolver = new DisambiguationResolver(gamaMorphSdk);
+		disambiguationResolver = new DisambiguationResolver(Boolean.FALSE);
+		log.debug("Gama is initialized!");
+	}
+
+	public void init(boolean initDisambiguationResolver) {
+		gamaParser.init();
+		gamaMorphSdk.init();
+		disambiguationResolver = new DisambiguationResolver(initDisambiguationResolver);
 		log.debug("Gama is initialized!");
 	}
 
@@ -53,11 +60,13 @@ public class GamaImpl implements Gama {
 		);
 	}
 
-	public List<List<Form>> ResolveHomonim(List<Word> bearingPhrase) {
-		ArrayList<String> wordTags = new ArrayList<>();
+	@Override
+	public BearingPhrase disambiguation(BearingPhrase bearingPhrase) {
+		List<Word> words = bearingPhrase.getWords();
+		List<String> wordTags = new ArrayList<>();
 		final String[] str = {""};
-		bearingPhrase.forEach(word -> {
-			var forms = word.getOmoForms();
+		words.forEach(word -> {
+			List<Form> forms = word.getOmoForms();
 			if (forms.size() == 1) {
 				wordTags.add(Byte.toString(forms.get(0).getTypeOfSpeech()));
 			} else if (forms.size() > 1) {
@@ -74,23 +83,23 @@ public class GamaImpl implements Gama {
 				wordTags.add("empty");
 			}
 		});
-		disambiguationResolver.setPoSStopWords(bearingPhrase, wordTags);
+		disambiguationResolver.setPoSStopWords(words, wordTags);
 		for (int k = 0; k < 2; k++) {
 			for (int i = 0; i < wordTags.size(); i++) {
 				if (k == 0) {
 					if (wordTags.get(i).contains("|")) {
-						if (bearingPhrase.get(i).getOmoForms().size() > 0 && gamaMorphSdk.tagSequenceContains(String.valueOf(bearingPhrase.get(i).getOmoForms().get(0).hashCode()))) {
-							disambiguationResolver.tagProbabilityCalculation(bearingPhrase, wordTags, i, true);
-						} else if (bearingPhrase.get(i).getOmoForms().size() > 0) {
-							disambiguationResolver.tagProbabilityCalculation(bearingPhrase, wordTags, i, false);
+						if (words.get(i).getOmoForms().size() > 0 && disambiguationResolver.tagSequenceContains(words.get(i).getOmoForms().get(0).hashCode())) {
+							disambiguationResolver.tagProbabilityCalculation(words, wordTags, i, true);
+						} else if (words.get(i).getOmoForms().size() > 0) {
+							disambiguationResolver.tagProbabilityCalculation(words, wordTags, i, false);
 						}
 					}
 				} else {
-					disambiguationResolver.caseProbabilityCalculation(bearingPhrase, wordTags, i);
+					disambiguationResolver.caseProbabilityCalculation(words, wordTags, i);
 				}
 			}
 		}
-		return disambiguationResolver.setFinalCharacteristics(bearingPhrase, wordTags);
+		return new BearingPhrase(disambiguationResolver.setFinalCharacteristics(words, wordTags));
 	}
 
 

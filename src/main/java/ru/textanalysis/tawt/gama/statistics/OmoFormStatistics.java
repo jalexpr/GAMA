@@ -1,4 +1,6 @@
-package ru.textanalysis.tawt.gama.stat;
+package ru.textanalysis.tawt.gama.statistics;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,47 +8,39 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.file.Paths;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static ru.textanalysis.tawt.ms.constant.Const.LAVAL_COMPRESS;
 import static ru.textanalysis.tawt.ms.model.Property.*;
 import static template.wrapper.classes.Lzma2FileHelper.compressionFile;
 
 /**
- * Расчёт статистики, создание бирарного файла и его запаковка
+ * Расчёт статистики, создание бинарного файла и его запаковка
  */
-public class OmoFormStat {
+@Slf4j
+public class OmoFormStatistics {
 
-    private static final Logger log = Logger.getLogger(OmoFormStat.class.getName());
-    private final TagSequenceStat tagSequenceStat;
-    private final WordCharacteristicsStat wordCharacteristicsStat;
+    private final TagSequenceStatistics tagSequenceStatistics;
+    private final WordCharacteristicsStatistics wordCharacteristicsStatistics;
     private final File file;
-    private Map<String, Integer> StopWords;
+    private Map<String, Integer> stopWords;
 
-    /**
-     * Instantiates a new Omo form stat.
-     */
-    public OmoFormStat() {
-        String path = System.getProperty("java.io.tmpdir");
-        this.file = Paths.get(path, FOLDER, VERSION, OMO_FORM_STAT).toFile();
-        this.StopWords = new HashMap<>();
-        wordCharacteristicsStat = new WordCharacteristicsStat();
-        tagSequenceStat = new TagSequenceStat();
+    public OmoFormStatistics() {
+        this(new HashMap<>());
     }
 
     /**
-     * Instantiates a new Omo form stat.
-     *
      * @param stopWords Map ключ - слово, значение - часть речи в стандарте JMorfSdk
      */
-    public OmoFormStat(Map<String, Integer> stopWords) {
+    public OmoFormStatistics(Map<String, Integer> stopWords) {
         String path = System.getProperty("java.io.tmpdir");
-        this.file = Paths.get(path, FOLDER, VERSION, OMO_FORM_STAT).toFile();
-        this.StopWords = stopWords;
-        wordCharacteristicsStat = new WordCharacteristicsStat();
-        tagSequenceStat = new TagSequenceStat();
+        this.file = Paths.get(path, FOLDER, VERSION, OMO_FORM_STATISTICS).toFile();
+        this.stopWords = stopWords;
+        wordCharacteristicsStatistics = new WordCharacteristicsStatistics();
+        tagSequenceStatistics = new TagSequenceStatistics();
     }
 
     /**
@@ -56,37 +50,37 @@ public class OmoFormStat {
      * @param stopWords Map ключ - слово, значение - часть речи в стандарте JMorfSdk
      */
     public void setStopWords(Map<String, Integer> stopWords) {
-        this.StopWords = stopWords;
+        this.stopWords = stopWords;
     }
 
     /**
      * Добавляет новую последовательность тегов
      *
-     * @param sequence последовательность, теги разделяются симовлом '|'
+     * @param sequence последовательность, теги разделяются символом '|'
      */
     public void addNewTagSequence(String sequence) {
-        tagSequenceStat.addNewTagSequence(sequence);
+        tagSequenceStatistics.addNewTagSequence(sequence);
     }
 
     /**
      * Добавляет новую последовательность слова с тегом
      *
-     * @param sequence последовательность, слово и тег разделяются симовлом '|'
+     * @param sequence последовательность, слово и тег разделяются символом '|'
      */
     public void addNewWordSequence(String sequence) {
-        wordCharacteristicsStat.addNewWordSequence(sequence);
+        wordCharacteristicsStatistics.addNewWordSequence(sequence);
     }
 
     /**
      * Создание бинарного файла по собранной статистике
      */
     public void recreate() {
-        tagSequenceStat.getTagVers();
-        wordCharacteristicsStat.getWordVers(StopWords);
+        tagSequenceStatistics.getTagVers();
+        wordCharacteristicsStatistics.getWordVers(stopWords);
         file.getParentFile().mkdirs();
         try (FileOutputStream stream = new FileOutputStream(file)) {
-            if (tagSequenceStat.getTagVer().size() > 0) {
-                List<Sequence> tagSequence = new ArrayList<>(tagSequenceStat.getTagSequenceList());
+            if (tagSequenceStatistics.getTagVer().size() > 0) {
+                List<Sequence> tagSequence = new ArrayList<>(tagSequenceStatistics.getTagSequenceList());
 
                 for (int i = tagSequence.size() - 1; i >= 0; i--) {
                     if (tagSequence.get(i).toString().contains("null")) {
@@ -94,35 +88,35 @@ public class OmoFormStat {
                     }
                 }
 
-                for (int i = 0; i < tagSequenceStat.getTagVer().size(); i++) {
-                    String tagSequenceProbability = tagSequence.get(i).getSequence() + ":" + tagSequenceStat.getTagVer().get(i).replaceAll(",", ".");
+                for (int i = 0; i < tagSequenceStatistics.getTagVer().size(); i++) {
+                    String tagSequenceProbability = tagSequence.get(i).getSequence() + ":" + tagSequenceStatistics.getTagVer().get(i).replaceAll(",", ".");
                     byte[] bytesCount = tagSequenceProbability.getBytes();
                     stream.write(ByteBuffer.allocate(2).putShort((short) bytesCount.length).array());
                     stream.write(bytesCount);
                 }
             }
 
-            if (wordCharacteristicsStat.getWords().size() > 0) {
-                for (int i = 0; i < wordCharacteristicsStat.getWords().size(); i++) {
-                    String tagSequenceProbability = wordCharacteristicsStat.getWords().get(i).replaceAll(",", ".");
+            if (wordCharacteristicsStatistics.getWords().size() > 0) {
+                for (int i = 0; i < wordCharacteristicsStatistics.getWords().size(); i++) {
+                    String tagSequenceProbability = wordCharacteristicsStatistics.getWords().get(i).replaceAll(",", ".");
                     byte[] bytesCount = tagSequenceProbability.getBytes();
                     stream.write(ByteBuffer.allocate(2).putShort((short) bytesCount.length).array());
                     stream.write(bytesCount);
                 }
 
-                for (Map.Entry entry : StopWords.entrySet()) {
+                for (Map.Entry<String, Integer> entry : stopWords.entrySet()) {
                     String tagSequenceProbability = entry.getKey() + ":" + entry.getValue();
                     byte[] bytesCount = tagSequenceProbability.getBytes();
                     stream.write(ByteBuffer.allocate(2).putShort((short) bytesCount.length).array());
                     stream.write(bytesCount);
                 }
             }
-        } catch (FileNotFoundException e) {
-            String message = String.format("Файл не найден!%s.\n", e.getMessage());
-            log.log(Level.WARNING, message, e);
-        } catch (IOException e) {
-            String message = String.format("Ошибка записи в файл!%s.\n", e.getMessage());
-            log.log(Level.WARNING, message, e);
+        } catch (FileNotFoundException ex) {
+            String message = String.format("Файл не найден!%s.\n", ex.getMessage());
+            log.warn(message, ex);
+        } catch (IOException ex) {
+            String message = String.format("Ошибка записи в файл!%s.\n", ex.getMessage());
+            log.warn(message, ex);
         }
     }
 

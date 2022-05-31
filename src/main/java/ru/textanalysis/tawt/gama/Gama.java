@@ -21,6 +21,14 @@ public interface Gama extends InitializationModule {
 
 	BearingPhrase getMorphBearingPhrase(String bearingPhrase);
 
+	/**
+	 * Частичное снятие омонимии в предложении
+	 *
+	 * @param bearingPhrase предложение
+	 * @return предложение с частично снятой омонимии на уровне слов
+	 */
+	BearingPhrase disambiguation(BearingPhrase bearingPhrase);
+
 	Sentence getMorphSentence(String sentence);
 
 	Paragraph getMorphParagraph(String paragraph);

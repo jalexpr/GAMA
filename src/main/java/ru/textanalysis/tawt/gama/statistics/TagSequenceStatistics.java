@@ -1,17 +1,15 @@
-package ru.textanalysis.tawt.gama.stat;
+package ru.textanalysis.tawt.gama.statistics;
 
 import java.text.DecimalFormat;
 import java.util.*;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * Работа с последовательностью тегов
  */
-public class TagSequenceStat {
+public class TagSequenceStatistics {
 
-    private static final Logger log = Logger.getLogger(TagSequenceStat.class.getName());
     private final Map<String, Integer> tagSequence;
     private final List<Sequence> tagSequenceList;
     private final List<String> tagVer;
@@ -19,7 +17,7 @@ public class TagSequenceStat {
     /**
      * Instantiates a new Tag sequence stat.
      */
-    public TagSequenceStat() {
+    public TagSequenceStatistics() {
         tagSequence = new HashMap<>();
         tagVer = new ArrayList<>();
         tagSequenceList = new ArrayList<>();
@@ -28,7 +26,7 @@ public class TagSequenceStat {
     /**
      * Добавляет новую последовательность тегов
      *
-     * @param sequence последовательность, теги разделяются симовлом '|'
+     * @param sequence последовательность, теги разделяются символом '|'
      */
     public void addNewTagSequence(String sequence) {
         if (this.tagSequence.containsKey(sequence)) {
@@ -43,8 +41,8 @@ public class TagSequenceStat {
      * Расчёт вероятности встречи всех последовательностей
      */
     public void getTagVers() {
-        var keys = this.tagSequence.keySet().toArray(new String[0]);
-        var values = this.tagSequence.values().toArray(new Integer[0]);
+        String[] keys = this.tagSequence.keySet().toArray(new String[0]);
+        Integer[] values = this.tagSequence.values().toArray(new Integer[0]);
 
         for (int i = 0; i < keys.length; i++) {
             tagSequenceList.add(new Sequence(keys[i], values[i]));

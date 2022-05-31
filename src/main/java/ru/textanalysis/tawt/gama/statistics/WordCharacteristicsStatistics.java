@@ -1,24 +1,19 @@
-package ru.textanalysis.tawt.gama.stat;
+package ru.textanalysis.tawt.gama.statistics;
 
 import java.text.DecimalFormat;
 import java.util.*;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Работа со словами-омонимами
+ * Работа со словами - омонимами
  */
-public class WordCharacteristicsStat {
+public class WordCharacteristicsStatistics {
 
-    private static final Logger log = Logger.getLogger(WordCharacteristicsStat.class.getName());
     private final Map<String, Integer> wordSequence;
     private List<String> words;
 
-    /**
-     * Instantiates a new Word characteristics stat.
-     */
-    public WordCharacteristicsStat() {
+    public WordCharacteristicsStatistics() {
         wordSequence = new HashMap<>();
         words = new ArrayList<>();
     }
@@ -26,7 +21,7 @@ public class WordCharacteristicsStat {
     /**
      * Добавляет новую последовательность слова с тегом
      *
-     * @param sequence последовательность, слово и тег разделяются симовлом '|'
+     * @param sequence последовательность, слово и тег разделяются символом '|'
      */
     public void addNewWordSequence(String sequence) {
         if (wordSequence.containsKey(sequence)) {
@@ -43,18 +38,12 @@ public class WordCharacteristicsStat {
      * @param StopWords Map ключ - слово, значение - часть речи в стандарте JMorfSdk
      */
     public void getWordVers(Map<String, Integer> StopWords) {
-        Object[] tempWordSequence = this.wordSequence.entrySet().toArray();
-        Arrays.sort(tempWordSequence, new Comparator() {
-            public int compare(Object o1, Object o2) {
-                return ((Map.Entry<String, Integer>) o2).getKey()
-                        .compareTo(((Map.Entry<String, Integer>) o1).getKey());
-            }
-        });
+        Map.Entry<String, Integer>[] tempWordSequence = this.wordSequence.entrySet().toArray(new Map.Entry[0]);
+        Arrays.sort(tempWordSequence, (o1, o2) -> o2.getKey().compareTo(o1.getKey()));
 
         List<Sequence> wordSequence = new ArrayList<>();
-        for (int i = 0; i < tempWordSequence.length; i++) {
-            String[] tmp = tempWordSequence[i].toString().split("=");
-            wordSequence.add(new Sequence(tmp[0], Integer.parseInt(tmp[1])));
+        for (Map.Entry<String, Integer> entry : tempWordSequence) {
+            wordSequence.add(new Sequence(entry.getKey(), entry.getValue()));
         }
 
         for (int i = wordSequence.size() - 1; i >= 0; i--) {
@@ -75,7 +64,7 @@ public class WordCharacteristicsStat {
             }
         }
 
-        HashMap<String, Integer> wordTagSequence = new HashMap<>();
+        Map<String, Integer> wordTagSequence = new HashMap<>();
 
         String[] wordProbabilities = new String[wordSequence.size()];
 
@@ -110,7 +99,7 @@ public class WordCharacteristicsStat {
                 }
             }
             if (!found) {
-                StringBuilder text = new StringBuilder(wordSequenceValue[0] + ":" + wordSequenceValue[1] + ";" + wordProbabilities[i]);
+                StringBuilder text = new StringBuilder(wordSequenceValue[0]).append(":").append(wordSequenceValue[1]).append(";").append(wordProbabilities[i]);
                 for (int j = 0; j < wordProbabilities.length; j++) {
                     Pattern pattern = Pattern.compile("^" + wordSequenceValue[0] + "\\|");
                     Matcher matcher = pattern.matcher(wordSequence.get(j).toString());

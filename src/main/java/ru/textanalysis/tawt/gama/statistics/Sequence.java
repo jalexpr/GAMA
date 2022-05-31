@@ -1,4 +1,4 @@
-package ru.textanalysis.tawt.gama.stat;
+package ru.textanalysis.tawt.gama.statistics;
 
 class Sequence {
 
