@@ -14,12 +14,13 @@ import java.util.List;
 import java.util.Map;
 
 import static ru.textanalysis.tawt.ms.constant.Const.LAVAL_COMPRESS;
-import static ru.textanalysis.tawt.ms.model.Property.*;
+import static ru.textanalysis.tawt.ms.model.MorphologicalStructuresProperty.*;
 import static template.wrapper.classes.Lzma2FileHelper.compressionFile;
 
 /**
  * Расчёт статистики, создание бинарного файла и его запаковка
  */
+//todo перенести в конвектор в MS
 @Slf4j
 public class OmoFormStatistics {
 
@@ -37,7 +38,7 @@ public class OmoFormStatistics {
      */
     public OmoFormStatistics(Map<String, Integer> stopWords) {
         String path = System.getProperty("java.io.tmpdir");
-        this.file = Paths.get(path, FOLDER, VERSION, OMO_FORM_STATISTICS).toFile();
+        this.file = Paths.get(path, FOLDER, MS_VERSION, OMO_FORM_STATISTICS).toFile();
         this.stopWords = stopWords;
         wordCharacteristicsStatistics = new WordCharacteristicsStatistics();
         tagSequenceStatistics = new TagSequenceStatistics();

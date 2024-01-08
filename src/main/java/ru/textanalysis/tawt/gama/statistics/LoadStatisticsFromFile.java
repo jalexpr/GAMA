@@ -10,13 +10,14 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-import static ru.textanalysis.tawt.ms.model.Property.*;
+import static ru.textanalysis.tawt.ms.model.MorphologicalStructuresProperty.*;
 import static template.wrapper.classes.Lzma2FileHelper.ARCHIVE_EXPANSION;
 import static template.wrapper.classes.Lzma2FileHelper.deCompressionFile;
 
 /**
  * Загрузка информации о статистике последовательности тегов из бинарного файла
  */
+//todo перенести в конвектор в awf т.к. фильтровать можно не только в гамме
 @Slf4j
 public class LoadStatisticsFromFile {
 
@@ -24,7 +25,7 @@ public class LoadStatisticsFromFile {
 
     public LoadStatisticsFromFile() {
         String path = System.getProperty("java.io.tmpdir");
-        this.file = Paths.get(path, FOLDER, VERSION, OMO_FORM_STATISTICS).toFile();
+        this.file = Paths.get(path, FOLDER, MS_VERSION, OMO_FORM_STATISTICS).toFile();
         deCompress();
     }
 
