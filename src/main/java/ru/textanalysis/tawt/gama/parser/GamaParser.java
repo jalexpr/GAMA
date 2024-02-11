@@ -6,6 +6,10 @@ public interface GamaParser {
 
 	void init();
 
+	List<String> parserPhraseWithPunctuation(String bearingPhrase);
+
+	List<List<String>> parserSentenceWithPunctuation(String sentence);
+
 	List<String> getParserBearingPhrase(String bearingPhrase);
 
 	List<List<String>> getParserSentence(String sentence);

@@ -1,6 +1,8 @@
 package ru.textanalysis.tawt.gama.example;
 
 import ru.textanalysis.tawt.gama.GamaImpl;
+import ru.textanalysis.tawt.gama.parser.GamaParser;
+import ru.textanalysis.tawt.gama.parser.GamaParserDefault;
 import ru.textanalysis.tawt.graphematic.parser.text.GParserImpl;
 import ru.textanalysis.tawt.jmorfsdk.JMorfSdk;
 import ru.textanalysis.tawt.jmorfsdk.JMorfSdkFactory;
@@ -12,6 +14,12 @@ public class ExampleGama {
 
 		GamaImpl gama = new GamaImpl();
 		gama.init();
+		GamaParser gamaParser = new GamaParserDefault();
+
+		System.out.println(gamaParser.parserSentenceWithPunctuation("Самой длинной рекой в мире считается Нил, его длина – 66,71 километр."));
+	}
+}
+/*
 		GParserImpl gParser = new GParserImpl();
 		JMorfSdk jMorfSdk = JMorfSdkFactory.loadFullLibrary();
 		Sentence sentenceList = gama.getMorphSentence("Осенний марафон -"
@@ -165,3 +173,4 @@ public class ExampleGama {
 //		}); todo
 	}
 }
+*/
