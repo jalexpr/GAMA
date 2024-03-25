@@ -16,21 +16,6 @@ public class GamaParserDefault implements GamaParser {
 		parser = new GParserImpl();
 	}
 
-	public List<List<String>> parserSentenceWithPunctuation(String sentence) throws NotParserTextException {
-		List<List<String>> sentenceList = new LinkedList<>();
-
-		for (String basicsPhase : sentence.split("((?=(\n))|((?<=[,.!?–;:])(?!(\\p{N})))|((?=[,.!?–;:\n])(?<!(\\p{N}))))")) {
-			System.out.println(basicsPhase);
-			sentenceList.add(parserPhraseWithPunctuation(basicsPhase));
-		}
-
-		return sentenceList;
-	}
-
-	public List<String> parserPhraseWithPunctuation(String basicsPhase) throws NotParserTextException {
-		return new LinkedList<>(Arrays.asList(basicsPhase.split("(?<=(\n))|((?<![\\p{L}\\p{N}_-])|(?![\\p{L}\\p{N}_-]))((?<![,./])|(?!(\\p{N})))")));
-	}
-
 	@Override
 	public List<String> getParserBearingPhrase(String bearingPhrase) {
 		return parser.parserBasicsPhase(bearingPhrase.toLowerCase());
@@ -49,5 +34,39 @@ public class GamaParserDefault implements GamaParser {
 	@Override
 	public List<List<List<List<String>>>> getParserText(String text) {
 		return parser.parserText(text.toLowerCase());
+	}
+
+	public List<String> getParserBearingPhraseWithPunctuation(String bearingPhrase) {
+		return new LinkedList<>(Arrays.asList(bearingPhrase.split("(?<=(\n))|((?<![\\p{L}\\p{N}_-])|(?![\\p{L}\\p{N}_-]))((?<![,./])|(?!(\\p{N})))")));
+	}
+
+	public List<List<String>> getParserSentenceWithPunctuation(String sentence) {
+		List<List<String>> phraseList = new LinkedList<>();
+
+		for (String basicsPhase : sentence.split("((?=(\n))|((?<=[,.!?–;:])(?!(\\p{N})))|((?=[,.!?–;:\n])(?<!(\\p{N}))))")) {
+			phraseList.add(getParserBearingPhraseWithPunctuation(basicsPhase));
+		}
+
+		return phraseList;
+	}
+
+	public List<List<List<String>>> getParserParagraphWithPunctuation(String paragraph) {
+		List<List<List<String>>> sentenceList = new LinkedList<>();
+
+		for (String sentence : paragraph.split("((?=(\n))|((?<=[.!?])(?!(\\p{N})))|((?=[.!?\n])(?<!(\\p{N}))))")) {
+			sentenceList.add(getParserSentenceWithPunctuation(sentence));
+		}
+
+		return sentenceList;
+	}
+
+	public List<List<List<List<String>>>> getParserTextWithPunctuation(String text) {
+		List<List<List<List<String>>>> paragraphList = new LinkedList<>();
+
+		for (String paragraph : text.split("(?=(\n))")) {
+			paragraphList.add(getParserParagraphWithPunctuation(paragraph));
+		}
+
+		return paragraphList;
 	}
 }

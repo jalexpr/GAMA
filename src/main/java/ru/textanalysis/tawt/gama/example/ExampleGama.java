@@ -15,11 +15,8 @@ public class ExampleGama {
 		GamaImpl gama = new GamaImpl();
 		gama.init();
 		GamaParser gamaParser = new GamaParserDefault();
+		System.out.println(gamaParser.getParserParagraphWithPunctuation("Самой длинной рекой в мире считается Нил, его длина – 66,71 километр."));
 
-		System.out.println(gamaParser.parserSentenceWithPunctuation("Самой длинной рекой в мире считается Нил, его длина – 66,71 километр."));
-	}
-}
-/*
 		GParserImpl gParser = new GParserImpl();
 		JMorfSdk jMorfSdk = JMorfSdkFactory.loadFullLibrary();
 		Sentence sentenceList = gama.getMorphSentence("Осенний марафон -"
@@ -173,4 +170,3 @@ public class ExampleGama {
 //		}); todo
 	}
 }
-*/

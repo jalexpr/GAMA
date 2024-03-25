@@ -140,19 +140,11 @@ public class GamaImpl implements Gama {
 		return null;//todo
 	}
 
-	public String replaceNumbersWithWords(String text) {
-		List<List<String>> strList = gamaParser.parserSentenceWithPunctuation(text);
-		StringBuilder sb = new StringBuilder();
-		/*NumeralsConverter nc = new NumeralsConverter();
+	/*public String replaceNumbersWithWords(String text) {
+		GamaParser gamaParser = new GamaParserDefault();
+		List<String> parsedText = gamaParser.getParserBearingPhraseWithPunctuation(text);
 
-		for (List<String> phrase : strList) {
-			sb.append(getTextFromList(nc.replaceNumber(phrase)));
-		}*/
-
-		return String.valueOf(sb);
-	}
-
-	public String getTextFromList(List<String> strList) {
-		return String.join("", strList);
-	}
+		NumeralsConverter nc = new NumeralsConverter();
+		return nc.replaceNumber(parsedText);
+	}*/
 }
