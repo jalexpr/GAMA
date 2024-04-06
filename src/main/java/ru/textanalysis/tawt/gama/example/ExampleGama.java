@@ -14,10 +14,15 @@ public class ExampleGama {
 
 		GamaImpl gama = new GamaImpl();
 		gama.init();
-		GamaParser gamaParser = new GamaParserDefault();
-		System.out.println(gamaParser.getParserParagraphWithPunctuation("Самой длинной рекой в мире считается Нил, его длина – 66,71 километр."));
-
 		GParserImpl gParser = new GParserImpl();
+
+		System.out.println(gama.replaceNumbersWithWords("Если бы 2 химика, свободно владеющие 30 языками, начали \n" +
+				"с 1 января 1964 года читать все выходящие в этом году публикации, представляющие для них \n" +
+				"профессиональный интерес, и читали бы их по 40 часов в неделю со скоростью 4 публикации в \n" +
+				"час, то к 31 декабря 1964 года они прочитали бы лишь 2/10 части этих публикаций."));
+
+		System.out.println(gParser.parserParagraphWithPunctuation("Самой длинной рекой в мире считается Нил, его длина – 66,71 километр."));
+
 		JMorfSdk jMorfSdk = JMorfSdkFactory.loadFullLibrary();
 		Sentence sentenceList = gama.getMorphSentence("Осенний марафон -"
 			+ " стало ясно, что будет с российской валютой. Справедливый курс,"
