@@ -1,6 +1,8 @@
 package ru.textanalysis.tawt.gama.example;
 
 import ru.textanalysis.tawt.gama.GamaImpl;
+import ru.textanalysis.tawt.gama.parser.GamaParser;
+import ru.textanalysis.tawt.gama.parser.GamaParserDefault;
 import ru.textanalysis.tawt.graphematic.parser.text.GParserImpl;
 import ru.textanalysis.tawt.jmorfsdk.JMorfSdk;
 import ru.textanalysis.tawt.jmorfsdk.JMorfSdkFactory;
@@ -13,6 +15,14 @@ public class ExampleGama {
 		GamaImpl gama = new GamaImpl();
 		gama.init();
 		GParserImpl gParser = new GParserImpl();
+
+		System.out.println(gama.replaceNumbersWithWords("Если бы 2 химика, свободно владеющие 30 языками, начали " +
+				"с 1 января 1964 года читать все выходящие в этом году публикации, представляющие для них " +
+				"профессиональный интерес, и читали бы их по 40 часов в неделю со скоростью 4 публикации в " +
+				"час, то к 31 декабря 1964 года они прочитали бы лишь 2/10 части этих публикаций."));
+
+		System.out.println(gParser.parserParagraphWithPunctuation("Самой длинной рекой в мире считается Нил, его длина – 66,71 километр."));
+
 		JMorfSdk jMorfSdk = JMorfSdkFactory.loadFullLibrary();
 		Sentence sentenceList = gama.getMorphSentence("Осенний марафон -"
 			+ " стало ясно, что будет с российской валютой. Справедливый курс,"

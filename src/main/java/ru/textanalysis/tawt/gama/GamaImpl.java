@@ -1,11 +1,13 @@
 package ru.textanalysis.tawt.gama;
 
 import lombok.extern.slf4j.Slf4j;
+import ru.textanalysis.tawt.gama.converters.NumeralsConverter;
 import ru.textanalysis.tawt.gama.disambiguation.DisambiguationResolver;
 import ru.textanalysis.tawt.gama.morfsdk.GamaMorfSdk;
 import ru.textanalysis.tawt.gama.morfsdk.GameMorphSdkDefault;
 import ru.textanalysis.tawt.gama.parser.GamaParser;
 import ru.textanalysis.tawt.gama.parser.GamaParserDefault;
+import ru.textanalysis.tawt.graphematic.parser.text.GParserImpl;
 import ru.textanalysis.tawt.ms.model.gama.BearingPhrase;
 import ru.textanalysis.tawt.ms.model.gama.Paragraph;
 import ru.textanalysis.tawt.ms.model.gama.Sentence;
@@ -138,5 +140,13 @@ public class GamaImpl implements Gama {
 //			.filter(Objects::nonNull)
 //			.collect(Collectors.toList());
 		return null;//todo
+	}
+
+	public String replaceNumbersWithWords(String text) {
+		GParserImpl gParser = new GParserImpl();
+		List<String> parsedText = gParser.parserBasicsPhaseWithPunctuation(text);
+
+		NumeralsConverter nc = new NumeralsConverter();
+		return nc.replaceNumber(parsedText);
 	}
 }
