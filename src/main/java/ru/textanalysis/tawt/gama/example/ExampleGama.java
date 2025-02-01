@@ -4,6 +4,7 @@ import ru.textanalysis.tawt.gama.GamaImpl;
 import ru.textanalysis.tawt.graphematic.parser.text.GParserImpl;
 import ru.textanalysis.tawt.jmorfsdk.JMorfSdk;
 import ru.textanalysis.tawt.jmorfsdk.JMorfSdkFactory;
+import ru.textanalysis.tawt.ms.model.gama.BearingPhrase;
 import ru.textanalysis.tawt.ms.model.gama.Sentence;
 
 public class ExampleGama {
@@ -12,6 +13,30 @@ public class ExampleGama {
 
 		GamaImpl gama = new GamaImpl();
 		gama.init();
+
+		BearingPhrase bearingPhraseExample = gama.getMorphBearingPhrase("Мама мыла раму, папа нет.");
+		System.out.println(bearingPhraseExample);
+
+//		BearingPhrase: [
+//			Word:	- мама:
+//				{TF=INITIAL,isInit=true,hash=33207555,str='мама',ToS=17,morf=106},
+//			Word: 	- мыло:
+//				{TF=DERIVATIVE,isInit=false,hash=408617219,str='мыла',ToS=17,morf=175}
+//				{TF=DERIVATIVE,isInit=false,hash=408617219,str='мыла',ToS=17,morf=127}
+//				{TF=DERIVATIVE,isInit=false,hash=408617219,str='мыла',ToS=17,morf=575}
+//				{TF=DERIVATIVE,isInit=false,hash=408617219,str='мыла',ToS=20,morf=666664},
+//			Word:	- рам:
+//				{TF=DERIVATIVE,isInit=false,hash=615364099,str='раму',ToS=17,morf=549755814119}
+//				{TF=DERIVATIVE,isInit=false,hash=615364099,str='раму',ToS=17,morf=555},
+//			Word:	- папа:
+//				{TF=INITIAL,isInit=true,hash=47220483,str='папа',ToS=17,morf=102},
+//			Word:	- нет:
+//				{TF=INITIAL,isInit=true,hash=40636160,str='нет',ToS=14,morf=0}
+//				{TF=INITIAL,isInit=true,hash=40636160,str='нет',ToS=15,morf=0}
+//				{TF=INITIAL,isInit=true,hash=40636160,str='нет',ToS=11,morf=65536}
+//		]
+
+
 		GParserImpl gParser = new GParserImpl();
 		JMorfSdk jMorfSdk = JMorfSdkFactory.loadFullLibrary();
 		Sentence sentenceList = gama.getMorphSentence("Осенний марафон -"
